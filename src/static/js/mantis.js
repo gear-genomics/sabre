@@ -70,18 +70,31 @@ function hideElement(element) {
 function alignmentHtml(sequences, n) {
   const chunkedSequences = sequences.map(s => chunked(s.seq, n))
   const widthLabel = Math.max(...sequences.map(s => s.id.length))
+  const widthPosition = Math.max(
+    ...sequences.map(s => ungapped(s.seq).length.toString().length)
+  )
+  const offset = {}
   let ret = ''
   zip(...chunkedSequences).forEach((block, i) => {
     ret += `<div class="alignment-block">`
-    ret += `<div class="alignment-line">${' '.repeat(widthLabel)} ${i * n +
-      1}</div>`
+    ret += `<div class="alignment-line">${' '.repeat(
+      widthLabel + widthPosition + 3
+    )} ${i * n + 1}</div>`
     ret += `${block
-      .map(
-        (line, j) =>
-          `<div class="alignment-line">${sequences[j].id.padStart(
-            widthLabel
-          )} ${line}</div>`
-      )
+      .map((line, j) => {
+        const id = sequences[j].id
+        let position = offset[id] ? offset[id] + 1 : 0
+        const subseq = ungapped(line)
+        if (offset[id]) {
+          offset[id] += subseq.length
+        } else if (subseq.length > 0) {
+          position = 1
+          offset[id] = subseq.length
+        }
+        return `<div class="alignment-line">${id.padStart(
+          widthLabel
+        )} [${position.toString().padStart(widthPosition)}] ${line}</div>`
+      })
       .join('')}</div>`
     ret += '</div>'
   })
@@ -106,6 +119,10 @@ function zip() {
     ret.push(record)
   }
   return ret
+}
+
+function ungapped(seq) {
+  return seq.replace(/-/g, '')
 }
 
 function parseMultiFasta(str) {
