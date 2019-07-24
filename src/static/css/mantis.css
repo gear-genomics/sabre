@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600&display=swap');
+
 .alignment-block {
   margin-bottom: 1rem;
   padding: 1rem;
-  /* background-color: #fafafa; */
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
+  font-family: 'Source Code Pro', monospace;
 }

@@ -36,7 +36,6 @@ function run() {
   hideElement(error)
   showElement(notification)
   hideElement(resultsContainer)
-
   displayResults(sequences)
 }
 
@@ -56,6 +55,7 @@ function displayResults(sequences) {
   showElement(resultsContainer)
   const alignmentCharactersPerLine = parseInt(inputCharsPerLine.value, 10)
   const alignment = alignmentHtml(sequences, alignmentCharactersPerLine)
+  hideElement(notification)
   resultAlignment.innerHTML = alignment
 }
 
