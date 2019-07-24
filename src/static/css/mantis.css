@@ -5,3 +5,12 @@
   padding: 1rem;
   font-family: 'Source Code Pro', monospace;
 }
+
+.aligned-char {
+  font-weight: 600;
+  color: black;
+}
+
+.mismatch {
+  color: red;
+}

@@ -79,12 +79,54 @@ function alignmentHtml(sequences, n) {
     const startAlign = i * n + 1
     const widthAlign = Math.min(n, block[0].length)
     const endAlign = startAlign + widthAlign - 1
+    onsole
     ret += `<div class="alignment-block">`
     ret += `<div class="alignment-line">${' '.repeat(
       widthLabel + widthPosition + 3
     )} ${startAlign} ${' '.repeat(
       widthAlign - startAlign.toString().length - endAlign.toString().length - 1
     )}${endAlign}</div>`
+
+    const bases = new Map()
+    for (let colIdx = 0; colIdx < widthAlign; colIdx += 1) {
+      const column = block.map(line => line[colIdx])
+      // filter out end gaps
+      const columnFiltered = column.filter(
+        (_, idx) =>
+          !isEndGap(
+            block[idx],
+            colIdx,
+            offset[sequences[idx].id],
+            sequences[idx].ungapped.length
+          )
+      )
+      const counts = count(columnFiltered)
+      const countsSorted = Object.entries(counts).sort((a, b) => b[1] - a[1])
+      let consensus
+      if (
+        countsSorted.length === 1 ||
+        (countsSorted.length > 1 && countsSorted[0][1] > countsSorted[1][1])
+      ) {
+        consensus = countsSorted[0][0]
+      }
+      for (let rowIdx = 0; rowIdx < block.length; rowIdx += 1) {
+        bases[[rowIdx, colIdx]] = { classes: [] }
+        if (
+          !isEndGap(
+            block[rowIdx],
+            colIdx,
+            offset[rowIdx],
+            sequences[rowIdx].ungapped.length
+          )
+        ) {
+          bases[[rowIdx, colIdx]].classes.push('aligned-char')
+          if (consensus && block[rowIdx][colIdx] !== consensus) {
+            bases[[rowIdx, colIdx]].classes.push('mismatch')
+          }
+        }
+      }
+    }
+
     ret += `${block
       .map((line, j) => {
         const id = sequences[j].id
@@ -101,7 +143,12 @@ function alignmentHtml(sequences, n) {
           widthLabel
         )} [${start.toString().padStart(widthPosition)}] ${line
           .split('')
-          .map(char => `<span>${char}</span>`)
+          .map(
+            (char, idx) =>
+              `<span class="${bases[[j, idx]].classes.join(
+                ' '
+              )}">${char}</span>`
+          )
           .join('')} [${end.toString().padStart(widthPosition)}] ${id}</div>`
       })
       .join('')}</div>`
@@ -130,6 +177,37 @@ function zip() {
   return ret
 }
 
+function count(xs) {
+  const counts = {}
+  for (const x of xs) {
+    if (!counts[x]) {
+      counts[x] = 0
+    }
+    counts[x] += 1
+  }
+  return counts
+}
+
+function isEndGap(line, idx, offset, seqLength) {
+  // not a gap
+  if (line[idx] !== '-') {
+    return false
+  }
+  // trailing gap
+  if (offset && offset >= seqLength) {
+    return true
+  }
+  // leading gap
+  if (!offset) {
+    // find first non-gap character
+    const m = /[^-]/.exec(line)
+    if (m === null || m.index > idx) {
+      return true
+    }
+  }
+  return false
+}
+
 function ungapped(seq) {
   return seq.replace(/-/g, '')
 }
@@ -144,7 +222,8 @@ function parseMultiFasta(str) {
         sequences.push({
           header,
           id: />\s*(\S+)/.exec(header)[1],
-          seq
+          seq,
+          ungapped: ungapped(seq)
         })
       }
       header = line
@@ -157,7 +236,8 @@ function parseMultiFasta(str) {
     sequences.push({
       header,
       id: />\s*(\S+)/.exec(header)[1],
-      seq
+      seq,
+      ungapped: ungapped(seq)
     })
   }
   return sequences
