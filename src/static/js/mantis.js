@@ -76,24 +76,33 @@ function alignmentHtml(sequences, n) {
   const offset = {}
   let ret = ''
   zip(...chunkedSequences).forEach((block, i) => {
+    const startAlign = i * n + 1
+    const widthAlign = Math.min(n, block[0].length)
+    const endAlign = startAlign + widthAlign - 1
     ret += `<div class="alignment-block">`
     ret += `<div class="alignment-line">${' '.repeat(
       widthLabel + widthPosition + 3
-    )} ${i * n + 1}</div>`
+    )} ${startAlign} ${' '.repeat(
+      widthAlign - startAlign.toString().length - endAlign.toString().length - 1
+    )}${endAlign}</div>`
     ret += `${block
       .map((line, j) => {
         const id = sequences[j].id
-        let position = offset[id] ? offset[id] + 1 : 0
         const subseq = ungapped(line)
+        let start = offset[id] ? offset[id] + 1 : 0
+        const end = start + subseq.length
         if (offset[id]) {
           offset[id] += subseq.length
         } else if (subseq.length > 0) {
-          position = 1
+          start = 1
           offset[id] = subseq.length
         }
         return `<div class="alignment-line">${id.padStart(
           widthLabel
-        )} [${position.toString().padStart(widthPosition)}] ${line}</div>`
+        )} [${start.toString().padStart(widthPosition)}] ${line
+          .split('')
+          .map(char => `<span>${char}</span>`)
+          .join('')} [${end.toString().padStart(widthPosition)}] ${id}</div>`
       })
       .join('')}</div>`
     ret += '</div>'
