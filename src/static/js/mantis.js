@@ -20,7 +20,7 @@ const errorMessage = document.querySelector('#error-message')
 const resultLink = document.querySelector('#link-results')
 
 submitButton.addEventListener('click', run)
-exampleButton.addEventListener('click', showExample)
+exampleButton.addEventListener('click', loadExample)
 
 const fileUpload = FilePond.create(inputFile)
 fileUpload.on('addfile', (error, file) => {
@@ -256,13 +256,8 @@ function readFile(file) {
   })
 }
 
-function showExample() {
-  setTimeout(() => {
-    hideElement(error)
-    resultLink.click()
-    const sequences = parseMultiFasta(exampleData.trim())
-    displayResults(sequences)
-  }, 400)
+function loadExample() {
+  inputFasta.textContent = exampleData
 }
 
 const exampleData = `>NFP-NFP2 (reverse)
