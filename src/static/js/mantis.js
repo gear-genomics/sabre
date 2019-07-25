@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import * as FilePond from 'filepond'
+import pako from 'pako'
 
 $('#mainTab a').on('click', function(e) {
   e.preventDefault()
@@ -17,11 +18,20 @@ const notification = document.querySelector('#bgen-notification')
 const error = document.querySelector('#bgen-error')
 const errorMessage = document.querySelector('#error-message')
 const resultLink = document.querySelector('#link-results')
-const fileUpload = FilePond.create(inputFile)
 
 submitButton.addEventListener('click', run)
 exampleButton.addEventListener('click', showExample)
 
+const fileUpload = FilePond.create(inputFile)
+fileUpload.on('addfile', (error, file) => {
+  // TODO handle properly
+  if (error) {
+    return
+  }
+  readFile(file).then(data => {
+    inputFasta.textContent = data
+  })
+})
 function run() {
   const sequences = getSequences()
   resultLink.click()
@@ -223,6 +233,27 @@ function parseMultiFasta(str) {
     })
   }
   return sequences
+}
+
+function readFile(file) {
+  const fileReader = new FileReader()
+  const isGzip = file.fileExtension === 'gz'
+
+  if (isGzip) {
+    fileReader.readAsArrayBuffer(file.file)
+  } else {
+    fileReader.readAsText(file.file)
+  }
+
+  return new Promise((resolve, reject) => {
+    fileReader.onload = event => {
+      let content = event.target.result
+      if (isGzip) {
+        content = pako.ungzip(content, { to: 'string' })
+      }
+      resolve(content)
+    }
+  })
 }
 
 function showExample() {
