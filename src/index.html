@@ -18,6 +18,10 @@
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
     />
+    <link
+      rel="stylesheet"
+      href="../node_modules/filepond/dist/filepond.min.css"
+    />
     <link rel="stylesheet" href="./static/css/gear.css" />
     <link rel="stylesheet" href="./static/css/mantis.css" />
   </head>
@@ -66,6 +70,18 @@
                     class="form-control"
                     id="chars-per-line"
                     value="80"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="barcodeAmount">Upload file in FASTA format</label>
+                  <input
+                    type="file"
+                    class="form-control-file"
+                    id="input-file"
                   />
                 </div>
               </div>

@@ -13,5 +13,9 @@
   "devDependencies": {
     "parcel-bundler": "^1.12.3",
     "rimraf": "^2.6.3"
+  },
+  "dependencies": {
+    "filepond": "^4.4.11",
+    "lodash": "^4.17.15"
   }
 }

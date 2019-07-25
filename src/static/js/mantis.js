@@ -1,3 +1,6 @@
+import _ from 'lodash'
+import * as FilePond from 'filepond'
+
 $('#mainTab a').on('click', function(e) {
   e.preventDefault()
   $(this).tab('show')
@@ -7,12 +10,14 @@ const submitButton = document.querySelector('#btn-submit')
 const exampleButton = document.querySelector('#btn-example')
 const inputFasta = document.querySelector('#fasta')
 const inputCharsPerLine = document.querySelector('#chars-per-line')
+const inputFile = document.querySelector('#input-file')
 const resultsContainer = document.querySelector('#results-container')
 const resultAlignment = document.querySelector('#result-alignment')
 const notification = document.querySelector('#bgen-notification')
 const error = document.querySelector('#bgen-error')
 const errorMessage = document.querySelector('#error-message')
 const resultLink = document.querySelector('#link-results')
+const fileUpload = FilePond.create(inputFile)
 
 submitButton.addEventListener('click', run)
 exampleButton.addEventListener('click', showExample)
@@ -75,7 +80,7 @@ function alignmentHtml(sequences, n) {
   )
   const offset = {}
   let ret = ''
-  zip(...chunkedSequences).forEach((block, i) => {
+  _.zip(...chunkedSequences).forEach((block, i) => {
     const startAlign = i * n + 1
     const widthAlign = Math.min(n, block[0].length)
     const endAlign = startAlign + widthAlign - 1
@@ -100,7 +105,7 @@ function alignmentHtml(sequences, n) {
             sequences[idx].ungapped.length
           )
       )
-      const counts = count(columnFiltered)
+      const counts = _.countBy(columnFiltered)
       const countsSorted = Object.entries(counts).sort((a, b) => b[1] - a[1])
       let consensus
       if (
@@ -163,29 +168,6 @@ function chunked(seq, n) {
     ret.push(seq.slice(i, i + n))
   }
   return ret
-}
-
-function zip() {
-  const ret = []
-  for (let i = 0; i < arguments[0].length; i += 1) {
-    const record = [arguments[0][i]]
-    for (let j = 1; j < arguments.length; j += 1) {
-      record.push(arguments[j][i])
-    }
-    ret.push(record)
-  }
-  return ret
-}
-
-function count(xs) {
-  const counts = {}
-  for (const x of xs) {
-    if (!counts[x]) {
-      counts[x] = 0
-    }
-    counts[x] += 1
-  }
-  return counts
 }
 
 function isEndGap(line, idx, offset, seqLength) {
