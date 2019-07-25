@@ -130,7 +130,7 @@ function alignmentHtml(sequences, n) {
           !isEndGap(
             block[rowIdx],
             colIdx,
-            offset[rowIdx],
+            offset[sequences[rowIdx].id],
             sequences[rowIdx].ungapped.length
           )
         ) {
@@ -147,13 +147,13 @@ function alignmentHtml(sequences, n) {
         const id = sequences[j].id
         const subseq = ungapped(line)
         let start = offset[id] ? offset[id] + 1 : 0
-        const end = start + subseq.length
         if (offset[id]) {
           offset[id] += subseq.length
         } else if (subseq.length > 0) {
           start = 1
           offset[id] = subseq.length
         }
+        const end = start + subseq.length - (subseq.length > 0 ? 1 : 0)
         return `<div class="alignment-line">${id.padStart(
           widthLabel
         )} [${start.toString().padStart(widthPosition)}] ${line
