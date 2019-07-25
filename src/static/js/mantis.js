@@ -79,7 +79,7 @@ function alignmentHtml(sequences, n) {
     const startAlign = i * n + 1
     const widthAlign = Math.min(n, block[0].length)
     const endAlign = startAlign + widthAlign - 1
-    onsole
+
     ret += `<div class="alignment-block">`
     ret += `<div class="alignment-line">${' '.repeat(
       widthLabel + widthPosition + 3
