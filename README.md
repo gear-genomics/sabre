@@ -1,1 +1,1 @@
-# mantis: multiple alignment visualizer
+# sabre: sequence alignment browser

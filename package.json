@@ -1,14 +1,17 @@
 {
-  "name": "mantis",
+  "name": "sabre",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sequence Alignment Browser",
   "main": "index.js",
   "scripts": {
     "build": "rimraf dist && parcel build src/index.html --no-source-maps --public-url ./",
     "dev": "parcel src/index.html --open"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Markus Hsi-Yang Fritz",
+    "email": "markus.h.y.fritz@gmail.com"
+  },
   "license": "MIT",
   "devDependencies": {
     "parcel-bundler": "^1.12.3",
