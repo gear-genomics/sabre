@@ -138,6 +138,8 @@ function alignmentHtml(sequences, n) {
           if (consensus && block[rowIdx][colIdx] !== consensus) {
             bases[[rowIdx, colIdx]].classes.push('mismatch')
           }
+        } else {
+          bases[[rowIdx, colIdx]].classes.push('end-gap')
         }
       }
     }
