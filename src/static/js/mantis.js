@@ -186,7 +186,10 @@ function isEndGap(line, idx, offset, seqLength) {
     return false
   }
   // trailing gap
-  if (offset && offset >= seqLength) {
+  let off = offset || 0
+  // account for non-gap characters in current line
+  off += line.substring(0, idx).replace(/-/g, '').length
+  if (off >= seqLength) {
     return true
   }
   // leading gap
