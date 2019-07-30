@@ -156,9 +156,11 @@ function alignmentHtml(sequences, n) {
           offset[id] = subseq.length
         }
         const end = start + subseq.length - (subseq.length > 0 ? 1 : 0)
-        return `<div class="alignment-line">${id.padStart(
-          widthLabel
-        )} [${start.toString().padStart(widthPosition)}] ${line
+        return `<div class="alignment-line">${' '.repeat(
+          widthLabel - id.length
+        )}<span onmouseover="showTooltipSequence(this, ${j})">${id}</span> [${start
+          .toString()
+          .padStart(widthPosition)}] ${line
           .split('')
           .map(
             (char, idx) =>
@@ -166,7 +168,9 @@ function alignmentHtml(sequences, n) {
                 ' '
               )}">${char}</span>`
           )
-          .join('')} [${end.toString().padStart(widthPosition)}] ${id}</div>`
+          .join('')} [${end
+          .toString()
+          .padStart(widthPosition)}] <span>${id}</span></div>`
       })
       .join('')}</div>`
     ret += '</div>'
