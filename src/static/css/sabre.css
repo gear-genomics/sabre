@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600&display=swap');
 
+#fasta {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.8rem;
+}
+
 .alignment-block {
   margin-bottom: 1rem;
   padding: 1rem;
@@ -17,4 +22,23 @@
 
 .end-gap {
   color: #aaa;
+}
+
+.tie-match {
+  color: dodgerblue;
+}
+
+.square {
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-left: 1rem;
+}
+
+.square.mismatch {
+  background-color: red;
+}
+
+.square.tie-match {
+  background-color: dodgerblue;
 }

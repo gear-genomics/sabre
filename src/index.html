@@ -91,7 +91,7 @@
                 <div class="form-group">
                   <label>Alignment in FASTA format</label>
                   <textarea
-                    class="form-control text-monospace"
+                    class="form-control"
                     id="fasta"
                     rows="15"
                     spellcheck="false"
@@ -134,7 +134,10 @@
           </div>
 
           <section id="results-container" class="d-none">
-            <h5 class="mb-4">Formatted Alignment</h5>
+            <div class="legend">
+              <span class="square mismatch"></span> mismatch
+              <span class="square tie-match"></span> ambiguous consensus
+            </div>
             <pre id="result-alignment"></pre>
           </section>
         </div>

@@ -117,13 +117,11 @@ function alignmentHtml(sequences, n) {
       )
       const counts = _.countBy(columnFiltered)
       const countsSorted = Object.entries(counts).sort((a, b) => b[1] - a[1])
-      let consensus
-      if (
-        countsSorted.length === 1 ||
-        (countsSorted.length > 1 && countsSorted[0][1] > countsSorted[1][1])
-      ) {
-        consensus = countsSorted[0][0]
-      }
+      const countsMax = countsSorted.filter(
+        ([, count]) => count === countsSorted[0][1]
+      )
+      const consensuses = _.map(countsMax, 0)
+
       for (let rowIdx = 0; rowIdx < block.length; rowIdx += 1) {
         bases[[rowIdx, colIdx]] = { classes: [] }
         if (
@@ -135,8 +133,18 @@ function alignmentHtml(sequences, n) {
           )
         ) {
           bases[[rowIdx, colIdx]].classes.push('aligned-char')
-          if (consensus && block[rowIdx][colIdx] !== consensus) {
+          if (
+            consensuses.length > 0 &&
+            !consensuses.includes(block[rowIdx][colIdx])
+          ) {
             bases[[rowIdx, colIdx]].classes.push('mismatch')
+          }
+          // ambiguous consensus / tie
+          if (
+            consensuses.length > 1 &&
+            consensuses.includes(block[rowIdx][colIdx])
+          ) {
+            bases[[rowIdx, colIdx]].classes.push('tie-match')
           }
         } else {
           bases[[rowIdx, colIdx]].classes.push('end-gap')
