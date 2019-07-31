@@ -32,7 +32,7 @@
   display: inline-block;
   width: 0.8rem;
   height: 0.8rem;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 .square.mismatch {
@@ -41,4 +41,8 @@
 
 .square.tie-match {
   background-color: dodgerblue;
+}
+
+.square.end-gap {
+  background-color: #aaa;
 }

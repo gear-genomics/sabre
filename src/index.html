@@ -77,7 +77,7 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="barcodeAmount">Upload file in FASTA format</label>
+                  <label>Upload alignment in FASTA format</label>
                   <input
                     type="file"
                     class="form-control-file"
@@ -89,7 +89,7 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label>Alignment in FASTA format</label>
+                  <label>...or enter alignment in FASTA format</label>
                   <textarea
                     class="form-control"
                     id="fasta"
@@ -137,6 +137,7 @@
             <div class="legend">
               <span class="square mismatch"></span> mismatch
               <span class="square tie-match"></span> ambiguous consensus
+              <span class="square end-gap"></span> leading/trailing gap
             </div>
             <pre id="result-alignment"></pre>
           </section>
