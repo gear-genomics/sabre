@@ -158,7 +158,7 @@ function alignmentHtml(sequences, n) {
         const end = start + subseq.length - (subseq.length > 0 ? 1 : 0)
         return `<div class="alignment-line">${' '.repeat(
           widthLabel - id.length
-        )}<span onmouseover="showTooltipSequence(this, ${j})">${id}</span> [${start
+        )}<span>${id}</span> [${start
           .toString()
           .padStart(widthPosition)}] ${line
           .split('')
