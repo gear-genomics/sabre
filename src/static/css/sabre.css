@@ -28,11 +28,17 @@
   color: dodgerblue;
 }
 
+.legend {
+  display: flex;
+  align-items: center;
+}
+
 .square {
   display: inline-block;
   width: 0.8rem;
   height: 0.8rem;
-  margin-left: 0.5rem;
+  margin: 0 0.25rem 0 0.75rem;
+  border-radius: 50%;
 }
 
 .square.mismatch {
