@@ -28,7 +28,7 @@ fileUpload.on('addfile', (error, file) => {
     return
   }
   readFile(file).then(data => {
-    inputFasta.textContent = data
+    inputFasta.value = data
   })
 })
 function run() {
