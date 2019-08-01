@@ -34,17 +34,10 @@ function run() {
   const sequences = getSequences()
   resultLink.click()
 
-  // if (sequences.length > 0) {
-  //   inputLength.value = candidates[0].length;
-  //   if (!_.every(candidates, candidate => isDna(candidate))) {
-  //     showError("candidate sequences can only contain characters A, C, G, T");
-  //     return;
-  //   }
-  //   if (new Set(candidates.map(candidate => candidate.length)).size !== 1) {
-  //     showError("candidate sequences must have the same length");
-  //     return;
-  //   }
-  // }
+  if (sequences.length === 0) {
+    showError('no sequences found')
+    return
+  }
 
   hideElement(error)
   showElement(notification)
