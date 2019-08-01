@@ -52,3 +52,8 @@
 .square.end-gap {
   background-color: #aaa;
 }
+
+/* TODO clash with BS class; should use tooltip.js `template` option */
+.tooltip {
+  opacity: 1 !important;
+}

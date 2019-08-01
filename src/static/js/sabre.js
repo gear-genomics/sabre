@@ -1,6 +1,7 @@
-import _ from 'lodash'
 import * as FilePond from 'filepond'
+import _ from 'lodash'
 import pako from 'pako'
+import Tooltip from 'tooltip.js'
 
 const submitButton = document.querySelector('#btn-submit')
 const exampleButton = document.querySelector('#btn-example')
@@ -63,6 +64,25 @@ function displayResults(sequences) {
   const alignment = alignmentHtml(sequences, alignmentCharactersPerLine)
   hideElement(notification)
   resultAlignment.innerHTML = alignment
+  addTooltips(sequences)
+}
+
+// TODO check how performant this is
+function addTooltips(sequences) {
+  const elemsSeq = document.querySelectorAll(
+    '#result-alignment [data-tooltip-seq]'
+  )
+  for (const elem of elemsSeq) {
+    const id = Number.parseInt(elem.dataset.tooltipSeq, 10)
+    const seq = sequences[id]
+    new Tooltip(elem, {
+      html: true,
+      title: `<div><u>ID:</u> ${seq.id}</div>
+      <div><u>Length:</u> ${seq.ungapped.length}</div>
+      <div><u>File header:</u> <code>${seq.header}</code></div>
+      `
+    })
+  }
 }
 
 function showElement(element) {
@@ -157,7 +177,7 @@ function alignmentHtml(sequences, n) {
         const end = start + subseq.length - (subseq.length > 0 ? 1 : 0)
         return `<div class="alignment-line">${' '.repeat(
           widthLabel - id.length
-        )}<span>${id}</span> [${start
+        )}<span data-tooltip-seq="${j}">${id}</span> [${start
           .toString()
           .padStart(widthPosition)}] ${line
           .split('')
@@ -169,7 +189,9 @@ function alignmentHtml(sequences, n) {
           )
           .join('')} [${end
           .toString()
-          .padStart(widthPosition)}] <span>${id}</span></div>`
+          .padStart(
+            widthPosition
+          )}] <span data-tooltip-seq="${j}">${id}</span></div>`
       })
       .join('')}</div>`
     ret += '</div>'
