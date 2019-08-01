@@ -49,8 +49,8 @@
       </div>
     </header>
 
-    <main class="container">
-      <ul class="nav nav-fill mb-4" id="mainTab">
+    <main>
+      <ul class="container nav nav-fill mb-4" id="mainTab">
         <li class="nav-item">
           <a class="nav-link active" href="#input-tab" data-toggle="tab"
             >Input</a
@@ -67,7 +67,7 @@
         </li>
       </ul>
       <div class="tab-content" id="main-tabs">
-        <div class="tab-pane show active" id="input-tab">
+        <div class="container tab-pane show active" id="input-tab">
           <form>
             <div class="row">
               <div class="col">
@@ -130,28 +130,36 @@
           </div>
         </div>
         <div class="tab-pane" id="result-tab">
-          <div
-            id="bgen-notification"
-            class="alert alert-info d-none"
-            role="alert"
-          >
-            <i class="fas fa-spinner spinner"></i>
-            Please be patient.
-          </div>
-          <div id="bgen-error" class="alert alert-danger d-none" role="alert">
-            <i class="fas fa-fire"></i>
-            <span id="error-message"></span>
+          <div class="container">
+            <div
+              id="bgen-notification"
+              class="alert alert-info d-none"
+              role="alert"
+            >
+              <i class="fas fa-spinner spinner"></i>
+              Please be patient.
+            </div>
+            <div id="bgen-error" class="alert alert-danger d-none" role="alert">
+              <i class="fas fa-fire"></i>
+              <span id="error-message"></span>
+            </div>
           </div>
 
-          <section id="results-container" class="d-none">
-            <div class="legend">
-              <span class="square mismatch"></span> <span>mismatch</span>
-              <span class="square tie-match"></span>
-              <span>ambiguous consensus</span>
-              <span class="square end-gap"></span>
-              <span>leading/trailing gap</span>
+          <section
+            id="results-container"
+            class="d-none container-fluid"
+            style="overflow: auto;"
+          >
+            <div class="d-flex flex-column justify-content-center">
+              <div class="legend" style="margin: 1rem auto 0;">
+                <span class="square mismatch"></span> <span>mismatch</span>
+                <span class="square tie-match"></span>
+                <span>ambiguous consensus</span>
+                <span class="square end-gap"></span>
+                <span>leading/trailing gap</span>
+              </div>
+              <pre id="result-alignment" style="margin: 0 auto;"></pre>
             </div>
-            <pre id="result-alignment"></pre>
           </section>
         </div>
       </div>
