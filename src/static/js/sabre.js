@@ -64,11 +64,11 @@ function displayResults(sequences) {
   const alignment = alignmentHtml(sequences, alignmentCharactersPerLine)
   hideElement(notification)
   resultAlignment.innerHTML = alignment
-  addTooltips(sequences)
+  addTooltips(sequences, alignmentCharactersPerLine)
 }
 
 // TODO check how performant this is
-function addTooltips(sequences) {
+function addTooltips(sequences, numCharsPerLine) {
   const elemsSeq = document.querySelectorAll(
     '#result-alignment [data-tooltip-seq]'
   )
@@ -80,6 +80,23 @@ function addTooltips(sequences) {
       title: `<div><u>ID:</u> ${seq.id}</div>
       <div><u>Length:</u> ${seq.ungapped.length}</div>
       <div><u>File header:</u> <code>${seq.header}</code></div>
+      `
+    })
+  }
+
+  const elemsChar = document.querySelectorAll('#result-alignment [data-block]')
+  for (const elem of elemsChar) {
+    const block = Number.parseInt(elem.dataset.block, 10)
+    const col = Number.parseInt(elem.dataset.col, 10)
+    const row = Number.parseInt(elem.dataset.row, 10)
+    const pos = Number.parseInt(elem.dataset.pos, 10) || ''
+    const seq = sequences[row]
+    new Tooltip(elem, {
+      html: true,
+      title: `<div><u>Sequence ID:</u> ${seq.id}</div>
+      <div><u>Sequence Length:</u> ${seq.ungapped.length}</div>
+      <div><u>Sequence position:</u> ${pos}</div>
+      <div><u>Alignment position:</u> ${block * numCharsPerLine + col + 1}</div>
       `
     })
   }
@@ -181,12 +198,16 @@ function alignmentHtml(sequences, n) {
           .toString()
           .padStart(widthPosition)}] ${line
           .split('')
-          .map(
-            (char, idx) =>
-              `<span class="${bases[[j, idx]].classes.join(
-                ' '
-              )}">${char}</span>`
-          )
+          .map((char, idx) => {
+            let pos = ''
+            if (char !== '-') {
+              const prefix = ungapped(line.substring(0, idx + 1))
+              pos = start + prefix.length - 1
+            }
+            return `<span data-block="${i}" data-row="${j}" data-col="${idx}" data-pos="${pos}" class="${bases[
+              [j, idx]
+            ].classes.join(' ')}">${char}</span>`
+          })
           .join('')} [${end
           .toString()
           .padStart(
