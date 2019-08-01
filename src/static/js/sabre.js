@@ -22,7 +22,10 @@ const resultLink = document.querySelector('#link-results')
 submitButton.addEventListener('click', run)
 exampleButton.addEventListener('click', loadExample)
 
-const fileUpload = FilePond.create(inputFile)
+const fileUpload = FilePond.create(inputFile, {
+  labelIdle:
+    'Drop your FASTA file or <span class="filepond--label-action"> Click to browse </span>'
+})
 fileUpload.on('addfile', (error, file) => {
   // TODO handle properly
   if (error) {
