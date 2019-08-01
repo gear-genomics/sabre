@@ -265,7 +265,7 @@ function readFile(file) {
 }
 
 function loadExample() {
-  inputFasta.textContent = exampleData
+  inputFasta.value = exampleData
 }
 
 const exampleData = `>NFP-NFP2 (reverse)
