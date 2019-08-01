@@ -2,11 +2,6 @@ import _ from 'lodash'
 import * as FilePond from 'filepond'
 import pako from 'pako'
 
-$('#mainTab a').on('click', function(e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-
 const submitButton = document.querySelector('#btn-submit')
 const exampleButton = document.querySelector('#btn-example')
 const inputFasta = document.querySelector('#fasta')
