@@ -16,16 +16,36 @@
   color: black;
 }
 
+.aligned-char:hover {
+  background-color: black;
+  color: white;
+}
+
 .mismatch {
   color: red;
+}
+
+.mismatch:hover {
+  background-color: red;
+  color: white;
 }
 
 .end-gap {
   color: #aaa;
 }
 
+.end-gap:hover {
+  background-color: #aaa;
+  color: white;
+}
+
 .tie-match {
   color: dodgerblue;
+}
+
+.tie-match:hover {
+  background-color: dodgerblue;
+  color: white;
 }
 
 .legend {
