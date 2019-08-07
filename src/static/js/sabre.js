@@ -13,6 +13,10 @@ const notification = document.querySelector('#bgen-notification')
 const error = document.querySelector('#bgen-error')
 const errorMessage = document.querySelector('#error-message')
 const resultLink = document.querySelector('#link-results')
+const infoContent = document.querySelector('#info-content')
+
+// TODO clean up globals...
+let sequences, blockOffsets, alignmentCharactersPerLine
 
 submitButton.addEventListener('click', run)
 exampleButton.addEventListener('click', loadExample)
@@ -21,6 +25,7 @@ const fileUpload = FilePond.create(inputFile, {
   labelIdle:
     'Drop your FASTA file or <span class="filepond--label-action"> Click to browse </span>'
 })
+
 fileUpload.on('addfile', (error, file) => {
   // TODO handle properly
   if (error) {
@@ -30,8 +35,84 @@ fileUpload.on('addfile', (error, file) => {
     inputFasta.value = data
   })
 })
+
+resultAlignment.addEventListener('mouseover', event => {
+  const isId = event.target.matches('[data-id]')
+  const isChar = event.target.matches('[data-char]')
+
+  if (!isId && !isChar) {
+    return
+  }
+
+  const lineElem = event.target.closest('[data-line]')
+  const line = Number.parseInt(lineElem.dataset.line, 10)
+  const seq = sequences[line]
+
+  if (isId) {
+    const html = `<table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Seq. ID</th>
+          <td>${seq.id}</td>
+        </tr>
+        <tr>
+          <th scope="row">Seq. length</th>
+          <td>${seq.ungapped.length}</td>
+        </tr>
+        <tr>
+          <th scope="row">File header</th>
+          <td>${seq.header}</td>
+        </tr>
+      </tbody>
+    </table>`
+
+    infoContent.innerHTML = html
+    return
+  }
+
+  const blockElem = event.target.closest('[data-block]')
+  const block = Number.parseInt(blockElem.dataset.block, 10)
+  // cumulative sequence offset of given block
+  const offBlock = blockOffsets[block][seq.id] || 0
+  // offset of current line
+  const offLine = [...lineElem.querySelectorAll('[data-char]')].indexOf(
+    event.target
+  )
+  const subseq = seq.seq.substr(block * alignmentCharactersPerLine, offLine + 1)
+  const posAlignment = block * alignmentCharactersPerLine + offLine + 1
+  const posSeq = offBlock + ungapped(subseq).length
+
+  const html = `<table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Alignment pos.</th>
+          <td>${posAlignment}</td>
+        </tr>
+        <tr>
+          <th scope="row">Seq. pos.</th>
+          <td>${posSeq}</td>
+        </tr>
+        <tr>
+          <th scope="row">Seq. ID</th>
+          <td>${seq.id}</td>
+        </tr>
+        <tr>
+          <th scope="row">Seq. length</th>
+          <td>${seq.ungapped.length}</td>
+        </tr>
+        <tr>
+          <th scope="row">File header</th>
+          <td>${seq.header}</td>
+        </tr>
+      </tbody>
+    </table>`
+
+  infoContent.innerHTML = html
+})
+
 function run() {
-  const sequences = getSequences()
+  infoContent.innerHTML = ''
+  getSequences()
   resultLink.click()
 
   if (sequences.length === 0) {
@@ -47,8 +128,7 @@ function run() {
 
 function getSequences() {
   const fasta = inputFasta.value.trim()
-  const sequences = parseMultiFasta(fasta)
-  return sequences
+  sequences = parseMultiFasta(fasta)
 }
 
 function showError(message) {
@@ -59,7 +139,7 @@ function showError(message) {
 
 function displayResults(sequences) {
   showElement(resultsContainer)
-  const alignmentCharactersPerLine = parseInt(inputCharsPerLine.value, 10)
+  alignmentCharactersPerLine = parseInt(inputCharsPerLine.value, 10)
   const alignment = alignmentHtml(sequences, alignmentCharactersPerLine)
   hideElement(notification)
   resultAlignment.innerHTML = alignment
@@ -80,14 +160,18 @@ function alignmentHtml(sequences, n) {
     ...sequences.map(s => ungapped(s.seq).length.toString().length)
   )
   const offset = {}
+  blockOffsets = {}
   let ret = ''
   _.zip(...chunkedSequences).forEach((block, i) => {
     const startAlign = i * n + 1
     const widthAlign = Math.min(n, block[0].length)
     const endAlign = startAlign + widthAlign - 1
 
-    ret += `<div class="alignment-block">`
-    ret += `<div class="alignment-line">${' '.repeat(
+    // FIXME: get rid of `offset`, use `blockOffsets` directly instead
+    blockOffsets[i] = _.cloneDeep(offset)
+
+    ret += `<div class="alignment-block" data-block="${i}">`
+    ret += `<div>${' '.repeat(
       widthLabel + widthPosition + 3
     )} ${startAlign} ${' '.repeat(
       widthAlign - startAlign.toString().length - endAlign.toString().length - 1
@@ -155,9 +239,9 @@ function alignmentHtml(sequences, n) {
           offset[id] = subseq.length
         }
         const end = start + subseq.length - (subseq.length > 0 ? 1 : 0)
-        return `<div class="alignment-line">${' '.repeat(
+        return `<div class="alignment-line" data-line="${j}">${' '.repeat(
           widthLabel - id.length
-        )}<span>${id}</span> [${start
+        )}<span data-id>${id}</span> [${start
           .toString()
           .padStart(widthPosition)}] ${line
           .split('')
@@ -165,11 +249,11 @@ function alignmentHtml(sequences, n) {
             (char, idx) =>
               `<span class="${bases[[j, idx]].classes.join(
                 ' '
-              )}">${char}</span>`
+              )}" data-char>${char}</span>`
           )
           .join('')} [${end
           .toString()
-          .padStart(widthPosition)}] <span>${id}</span></div>`
+          .padStart(widthPosition)}] <span data-id>${id}</span></div>`
       })
       .join('')}</div>`
     ret += '</div>'

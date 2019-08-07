@@ -72,3 +72,21 @@
 .square.end-gap {
   background-color: #aaa;
 }
+
+#results-container {
+  display: flex;
+}
+
+.pane-alignment {
+  flex: 1;
+  margin-right: 20px;
+  overflow: auto;
+}
+
+.pane-info {
+  flex: 0 0 300px;
+}
+
+.info-container {
+  position: fixed;
+}

@@ -154,7 +154,9 @@
             class="d-none container-fluid"
             style="overflow: auto;"
           >
-            <div class="d-flex flex-column justify-content-center">
+            <div
+              class="pane-alignment d-flex flex-column justify-content-center"
+            >
               <div class="legend" style="margin: 1rem auto 0;">
                 <span class="square mismatch"></span> <span>mismatch</span>
                 <span class="square tie-match"></span>
@@ -163,6 +165,13 @@
                 <span>leading/trailing gap</span>
               </div>
               <pre id="result-alignment" style="margin: 0 auto;"></pre>
+            </div>
+
+            <div class="pane-info">
+              <div class="info-container">
+                Hover information
+                <section id="info-content"></section>
+              </div>
             </div>
           </section>
         </div>
