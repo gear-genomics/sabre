@@ -80,7 +80,13 @@ resultAlignment.addEventListener('mouseover', event => {
   )
   const subseq = seq.seq.substr(block * alignmentCharactersPerLine, offLine + 1)
   const posAlignment = block * alignmentCharactersPerLine + offLine + 1
-  const posSeq = offBlock + ungapped(subseq).length
+  let posSeq = offBlock + ungapped(subseq).length
+  if (
+    posSeq === seq.ungapped.length &&
+    event.target.classList.contains('end-gap')
+  ) {
+    posSeq += 1
+  }
 
   const html = `<table class="table">
       <tbody>
@@ -91,6 +97,16 @@ resultAlignment.addEventListener('mouseover', event => {
         <tr>
           <th scope="row">Seq. pos.</th>
           <td>${posSeq}</td>
+        </tr>
+        <tr>
+        <tr>
+          <th scope="row">Character</th>
+          <td>
+            <span class="${event.target.classList.value}">${
+    subseq[subseq.length - 1]
+  }
+            </span>
+          </td>
         </tr>
         <tr>
           <th scope="row">Seq. ID</th>
