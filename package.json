@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "filepond": "^4.4.13",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "pako": "^1.0.10"
   }
 }
