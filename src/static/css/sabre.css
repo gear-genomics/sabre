@@ -1,4 +1,55 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600&display=swap');
+/* source-code-pro-regular - latin-ext_latin_greek-ext_greek */
+@font-face {
+  font-family: 'Source Code Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-regular.woff') format('woff'), /* Modern Browsers */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-regular.svg#SourceCodePro') format('svg'); /* Legacy iOS */
+}
+/* source-code-pro-600 - latin-ext_latin_greek-ext_greek */
+@font-face {
+  font-family: 'Source Code Pro';
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600.woff2') format('woff2'), /* Super Modern Browsers */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600.woff') format('woff'), /* Modern Browsers */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600.svg#SourceCodePro') format('svg'); /* Legacy iOS */
+}
+/* source-code-pro-italic - latin-ext_latin_greek-ext_greek */
+@font-face {
+  font-family: 'Source Code Pro';
+  font-style: italic;
+  font-weight: 400;
+  src: url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-italic.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-italic.woff') format('woff'), /* Modern Browsers */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-italic.svg#SourceCodePro') format('svg'); /* Legacy iOS */
+}
+/* source-code-pro-600italic - latin-ext_latin_greek-ext_greek */
+@font-face {
+  font-family: 'Source Code Pro';
+  font-style: italic;
+  font-weight: 600;
+  src: url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600italic.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600italic.woff') format('woff'), /* Modern Browsers */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('https://www.gear-genomics.com/libs/fonts/source-code-pro-v22-latin-ext_latin_greek-ext_greek-600italic.svg#SourceCodePro') format('svg'); /* Legacy iOS */
+}
 
 #fasta {
   font-family: 'Source Code Pro', monospace;
