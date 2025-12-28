@@ -24,7 +24,7 @@
       <div class="container">
         <h1 class="display-4 app-name">sabre</h1>
         <p class="lead">Browse sequence alignments.</p>
-	<a
+        <a
           class="plain"
           href="https://www.gear-genomics.com/contact"
           target="_blank"
@@ -32,7 +32,7 @@
           <i class="fas fa-question"></i> Get help
         </a>
         ·
-	<a
+        <a
           class="plain"
           href="https://www.gear-genomics.com/citation"
           target="_blank"
@@ -64,6 +64,14 @@
             id="link-results"
             data-toggle="tab"
             >Results</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="#help-tab"
+            data-toggle="tab"
+            >Help</a
           >
         </li>
       </ul>
@@ -117,7 +125,7 @@
           </form>
           <div class="mb-3">
             <button
-              type="submit"
+              type="button"
               class="btn btn-outline-primary"
               id="btn-submit"
             >
@@ -125,7 +133,7 @@
               Launch Analysis
             </button>
             <button
-              type="submit"
+              type="button"
               class="btn btn-outline-primary"
               id="btn-example"
             >
@@ -175,6 +183,25 @@
               </div>
             </div>
           </section>
+        </div>
+        <div class="container tab-pane" id="help-tab">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">How to use sabre</h5>
+              <ol class="mb-3">
+                <li>Paste a FASTA alignment or upload a FASTA/FASTA.gz file.</li>
+                <li>Adjust “Characters per line” to control alignment wrapping.</li>
+                <li>Click <strong>Launch Analysis</strong> to render the alignment.</li>
+                <li>Use <strong>Load Example</strong> to try a bundled demo dataset.</li>
+              </ol>
+              <h6>Tips</h6>
+              <ul class="mb-3">
+                <li>Only DNA alignments are supported at the moment.</li>
+                <li>Hover over characters to see alignment/sequence positions and metadata.</li>
+                <li>The legend highlights mismatches, ambiguous consensus calls, and end gaps.</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </main>
